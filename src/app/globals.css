@@ -1,0 +1,318 @@
+@import "tailwindcss";
+
+/*
+ * Monedo design tokens.
+ * Raw values live in :root / [data-theme] below and are mirrored in
+ * src/lib/design/tokens.ts (used by the contrast test). Keep both in sync.
+ * Components must only use the semantic utilities generated from @theme.
+ */
+
+/* Dark variant: explicit data-theme="dark", or system dark unless the user forced light. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]), :root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
+@theme {
+  /* Wipe Tailwind's default palette: only semantic tokens are allowed. */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-border-control: var(--border-control);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-text: var(--brand-text);
+  --color-brand-subtle: var(--brand-subtle);
+  --color-brand-subtle-fg: var(--brand-subtle-fg);
+  --color-amber: var(--amber);
+  --color-amber-text: var(--amber-text);
+  --color-amber-subtle: var(--amber-subtle);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-danger: var(--danger);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-focus: var(--focus);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-xl--letter-spacing: -0.01em;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-2xl--letter-spacing: -0.015em;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-3xl--letter-spacing: -0.02em;
+  --text-4xl: 2.375rem;
+  --text-4xl--line-height: 2.75rem;
+  --text-4xl--letter-spacing: -0.025em;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 3.25rem;
+  --text-5xl--letter-spacing: -0.03em;
+  --text-6xl: 3.75rem;
+  --text-6xl--line-height: 4rem;
+  --text-6xl--letter-spacing: -0.035em;
+
+  /* Shape */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-overlay: 0 1px 2px rgb(0 0 0 / 0.06), 0 12px 32px -8px rgb(0 0 0 / 0.18);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  --animate-fade-in: fade-in var(--duration-base) var(--ease-out);
+  --animate-pop-in: pop-in var(--duration-base) var(--ease-out);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes pop-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* Lesson prose measure (~68 characters). */
+@utility measure {
+  max-width: 68ch;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* ---------- Light (default) ---------- */
+:root {
+  color-scheme: light;
+
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-muted: #f4f4f5;
+  --surface-raised: #ffffff;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --border-control: #8b8b94;
+  --fg: #09090b;
+  --fg-muted: #52525b;
+  --fg-subtle: #686871;
+
+  --brand: #046c4e;
+  --brand-hover: #035a41;
+  --brand-fg: #ffffff;
+  --brand-text: #046c4e;
+  --brand-subtle: #e9f6f0;
+  --brand-subtle-fg: #035238;
+
+  --amber: #d97706;
+  --amber-text: #a1490a;
+  --amber-subtle: #fdf4e3;
+
+  --success: #12733d;
+  --success-subtle: #e8f5ec;
+  --danger: #c4231d;
+  --danger-fg: #ffffff;
+  --danger-subtle: #fdeceb;
+
+  --focus: #059669;
+  --chart-1: #046c4e;
+  --chart-2: #a1a1aa;
+}
+
+/* ---------- Dark (explicit, and system via the media query below; keep both identical) ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #09090b;
+  --surface: #111113;
+  --surface-muted: #18181b;
+  --surface-raised: #1c1c20;
+  --border: #27272a;
+  --border-strong: #3f3f46;
+  --border-control: #71717a;
+  --fg: #fafafa;
+  --fg-muted: #a1a1aa;
+  --fg-subtle: #8a8a93;
+
+  --brand: #0b7a59;
+  --brand-hover: #086549;
+  --brand-fg: #ffffff;
+  --brand-text: #3ccf98;
+  --brand-subtle: #0d2a20;
+  --brand-subtle-fg: #7ee2bb;
+
+  --amber: #f5a524;
+  --amber-text: #f7b955;
+  --amber-subtle: #2a1f0b;
+
+  --success: #4ade80;
+  --success-subtle: #0f2a19;
+  --danger: #f87171;
+  --danger-fg: #09090b;
+  --danger-subtle: #2c1212;
+
+  --focus: #34d399;
+  --chart-1: #3ccf98;
+  --chart-2: #52525b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --bg: #09090b;
+    --surface: #111113;
+    --surface-muted: #18181b;
+    --surface-raised: #1c1c20;
+    --border: #27272a;
+    --border-strong: #3f3f46;
+    --border-control: #71717a;
+    --border-control: #71717a;
+    --fg: #fafafa;
+    --fg-muted: #a1a1aa;
+    --fg-subtle: #8a8a93;
+
+    --brand: #0b7a59;
+    --brand-hover: #086549;
+    --brand-fg: #ffffff;
+    --brand-text: #3ccf98;
+    --brand-subtle: #0d2a20;
+    --brand-subtle-fg: #7ee2bb;
+
+    --amber: #f5a524;
+    --amber-text: #f7b955;
+    --amber-subtle: #2a1f0b;
+
+    --success: #4ade80;
+    --success-subtle: #0f2a19;
+    --danger: #f87171;
+    --danger-fg: #09090b;
+    --danger-fg: #09090b;
+    --danger-subtle: #2c1212;
+
+    --focus: #34d399;
+    --chart-1: #3ccf98;
+    --chart-2: #52525b;
+  }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--brand-subtle);
+    color: var(--brand-subtle-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
