@@ -48,9 +48,9 @@ export function Callout({
   return (
     <div
       role={tone === "danger" || tone === "warning" ? "alert" : "note"}
-      className={cn("flex gap-3 rounded-md border p-4 text-sm leading-6", toneClass, className)}
+      className={cn("flex gap-3 rounded-md border p-4 text-base leading-7", toneClass, className)}
     >
-      <Icon aria-hidden className={cn("mt-0.5 size-4 shrink-0", iconClass)} />
+      <Icon aria-hidden className={cn("mt-1.5 size-4 shrink-0", iconClass)} />
       <div className="min-w-0">
         {title ? <p className="font-medium text-fg">{title}</p> : null}
         <div className="text-fg-muted">{children}</div>

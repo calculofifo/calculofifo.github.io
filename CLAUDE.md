@@ -80,13 +80,27 @@ Referencia viva: `/design`. Listón: Linear, Vercel, Stripe, Brilliant.
   logros y rachas**; `success`/`danger` para acierto y error.
 - **Tema**: sigue al sistema; el selector guarda `light`/`dark` en `localStorage` (`monedo-theme`)
   y un script inline lo aplica antes de pintar. Variante `dark:` disponible pero preferir tokens.
+  Los tokens usan `@theme inline`, así que `data-theme` también funciona en un contenedor.
 - **Tipografía**: Geist Sans para todo; **números y euros con `<Money>`, `<Num>`, `<Percent>`
   o `font-mono tabular`**. Escala: xs 12 · sm 14 · base 16 · lg 18 · xl 20 · 2xl 24 · 3xl 30 ·
   4xl 38 · 5xl 48 · 6xl 60. Texto de lección con la utilidad `measure` (68ch) y `leading-7/8`.
-- **Forma**: bordes 1 px; radios `xs 4 · sm 6 · md 10 · lg 14 · xl 20`; sombra solo en capas
+  - **12 px (`text-xs`) solo para etiquetas e insignias.** Nada por debajo de 12 px (lo vigila
+    `typography.test.ts`).
+  - **Texto de lectura ≥ 16 px** (párrafos, descripciones, avisos, diálogos, lecciones: `text-lg`).
+    14 px solo para botones, navegación y metadatos de escritorio.
+  - **Campos de formulario a 16 px en móvil** (`text-base md:text-sm`) para evitar el zoom de iOS.
+- **Dato clave**: el sello de la marca. Usa `<KeyFigure>`: cifra grande en Geist Mono tabular,
+  unidad en sans y una línea de contexto. Como mucho uno por pantalla.
+- **Logotipo**: `<Logo>` (símbolo + nombre en trazados) y `<LogoMark small>` por debajo de 20 px.
+  Archivos en `public/brand/`; el nombre se regenera con `scripts/generate-wordmark.py`.
+- **Forma**: bordes 1 px; radios `xs 4 · sm 6 · md 10 · lg 14`; sombra solo en capas
   flotantes (`shadow-overlay`). Jerarquía con espacio y tipografía, no con cajas.
-- **Estados** obligatorios en todo lo interactivo: hover, `focus-visible` (anillo `outline-focus`),
-  disabled y loading.
+- **Estados** obligatorios en todo lo interactivo: hover, `focus-visible`, disabled y loading.
+  El **anillo de foco** es de 2 px con el color de marca (`outline-focus`: esmeralda en claro,
+  esmeralda claro en oscuro).
+- **Zonas táctiles ≥ 44×44 px en móvil.** Los botones y controles crecen por debajo de `md`
+  (`h-11 md:h-10`); si algo debe seguir siendo pequeño, usa la utilidad `touch-hit`. Lo comprueba
+  `e2e/accessibility.spec.ts`.
 - **Movimiento**: `--duration-fast/base/slow` (120/200/320 ms) y `--ease-out`. Motion va envuelto en
   `MotionConfig reducedMotion="user"` y hay un fallback CSS para `prefers-reduced-motion`.
 - **Mobile-first**: navegación inferior fija en móvil, cabecera en `md+`. Sin scroll horizontal a 390 px.

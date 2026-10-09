@@ -31,7 +31,7 @@ describe("tokens.ts mirrors globals.css", () => {
     return css.slice(start, css.indexOf("}", start));
   };
   const blocks: Record<ThemeName, string[]> = {
-    light: [block(":root")],
+    light: [block('[data-theme="light"]')],
     dark: [block('[data-theme="dark"]'), block(':root:not([data-theme="light"])')],
   };
   it.each(themes)("%s values match", (theme) => {

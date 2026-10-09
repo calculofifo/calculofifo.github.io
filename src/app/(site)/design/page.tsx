@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import { GrowthField } from "@/components/graphics/growth-field";
-import { Logo, LogoMark } from "@/components/graphics/logo";
 import { Container } from "@/components/layout/container";
 import { PageHeader } from "@/components/layout/page-header";
 import {
@@ -44,10 +43,12 @@ import { Money, Num, Percent } from "@/components/ui/num";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
+import { KeyFigure } from "@/components/ui/key-figure";
 import { Stat } from "@/components/ui/stat";
 import { StreakBadge } from "@/components/ui/streak-badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip } from "@/components/ui/tooltip";
+import { BrandSection } from "./_components/brand-section";
 import { ColorSwatches, ContrastTable } from "./_components/color-swatches";
 import { DialogDemo } from "./_components/dialog-demo";
 import { LessonLayoutDemo } from "./_components/lesson-layout-demo";
@@ -64,6 +65,7 @@ export const metadata: Metadata = {
 
 const toc = [
   ["principios", "Principios"],
+  ["logotipo", "Logotipo"],
   ["color", "Color"],
   ["contraste", "Contraste"],
   ["tipografia", "Tipografía"],
@@ -72,6 +74,7 @@ const toc = [
   ["campos", "Campos"],
   ["insignias", "Insignias"],
   ["progreso", "Progreso"],
+  ["dato-clave", "Dato clave"],
   ["tarjetas", "Tarjetas y cifras"],
   ["avisos", "Avisos"],
   ["preguntas", "Preguntas"],
@@ -91,8 +94,8 @@ const typeScale = [
   ["text-xl", "20 / 28", "Subtítulo o pregunta"],
   ["text-lg", "18 / 28", "Texto de lección en pantallas grandes"],
   ["text-base", "16 / 24", "Texto de interfaz y párrafos"],
-  ["text-sm", "14 / 20", "Etiquetas, metadatos y texto secundario"],
-  ["text-xs", "12 / 16", "Leyendas y notas"],
+  ["text-sm", "14 / 20", "Botones, navegación y metadatos en escritorio"],
+  ["text-xs", "12 / 16", "SOLO ETIQUETAS E INSIGNIAS"],
 ] as const;
 
 const icons = [
@@ -158,10 +161,18 @@ export default function DesignPage() {
               ].map(([title, body]) => (
                 <div key={title} className="flex flex-col gap-1.5">
                   <dt className="font-medium">{title}</dt>
-                  <dd className="text-sm leading-6 text-fg-muted">{body}</dd>
+                  <dd className="text-base leading-7 text-fg-muted">{body}</dd>
                 </div>
               ))}
             </dl>
+          </DesignSection>
+
+          <DesignSection
+            id="logotipo"
+            title="Logotipo"
+            description="Símbolo y nombre en SVG, en trazados. Funciona sobre claro y oscuro y se mantiene legible a 16 px como favicon."
+          >
+            <BrandSection />
           </DesignSection>
 
           <DesignSection
@@ -231,7 +242,6 @@ export default function DesignPage() {
                 ["sm", "6 px", "rounded-sm"],
                 ["md", "10 px", "rounded-md"],
                 ["lg", "14 px", "rounded-lg"],
-                ["xl", "20 px", "rounded-xl"],
               ].map(([name, px, cls]) => (
                 <div key={name} className="flex flex-col items-center gap-2">
                   <div className={`size-16 border border-border-strong bg-surface-muted ${cls}`} />
@@ -300,7 +310,7 @@ export default function DesignPage() {
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="d-name">Tu nombre (para el certificado)</Label>
                   <Input id="d-name" placeholder="Lucía García" autoComplete="off" />
-                  <p className="text-xs text-fg-subtle">Solo se guarda en este navegador.</p>
+                  <p className="text-sm text-fg-subtle">Solo se guarda en este navegador.</p>
                 </div>
                 <div className="flex flex-col gap-2">
                   <Label htmlFor="d-amount">Ahorro mensual</Label>
@@ -315,7 +325,7 @@ export default function DesignPage() {
                     aria-invalid
                     aria-describedby="d-invalid-msg"
                   />
-                  <p id="d-invalid-msg" className="text-xs text-danger">
+                  <p id="d-invalid-msg" className="text-sm text-danger">
                     Introduce un valor entre 0 y 20.
                   </p>
                 </div>
@@ -365,6 +375,25 @@ export default function DesignPage() {
           </DesignSection>
 
           <DesignSection
+            id="dato-clave"
+            title="Dato clave"
+            description="El sello de la marca: una cifra grande en Geist Mono con cifras tabulares, la unidad en sans y una línea de contexto. Uno por pantalla, como mucho."
+          >
+            <div className="grid gap-12 lg:grid-cols-2">
+              <KeyFigure
+                value={75}
+                unit="horas"
+                context="es lo que cuesta un móvil de 600 € si cobras 8 € netos por hora. Casi dos semanas de trabajo a jornada completa."
+              />
+              <KeyFigure
+                value={156}
+                unit="€ al año"
+                context="suma una suscripción de 13 € al mes. Los gastos pequeños y repetidos son los que menos se notan."
+              />
+            </div>
+          </DesignSection>
+
+          <DesignSection
             id="tarjetas"
             title="Tarjetas y cifras"
             description="Tarjetas planas con borde fino, solo cuando agrupan algo navegable."
@@ -386,7 +415,7 @@ export default function DesignPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-2">
-                  <div className="flex justify-between text-xs text-fg-subtle">
+                  <div className="flex justify-between text-sm text-fg-subtle">
                     <span>6 lecciones · 40 min</span>
                     <span className="font-mono tabular">33 %</span>
                   </div>
@@ -404,7 +433,7 @@ export default function DesignPage() {
                   <CardTitle className="mt-2 text-fg-muted">Bancos y pagos</CardTitle>
                   <CardDescription>Cuentas, débito y crédito, Bizum y comisiones.</CardDescription>
                 </CardHeader>
-                <CardFooter className="mt-5 text-xs text-fg-subtle">
+                <CardFooter className="mt-5 text-sm text-fg-subtle">
                   5 lecciones · 35 min
                 </CardFooter>
               </Card>
@@ -418,19 +447,6 @@ export default function DesignPage() {
                   </dl>
                 </CardContent>
               </Card>
-            </div>
-            <div className="mt-10">
-              <Specimen label="Dato clave (Stat lg)">
-                <dl>
-                  <Stat
-                    size="lg"
-                    label="Horas de trabajo que cuesta un móvil de 600 €"
-                    value={<Num value={66.7} fractionDigits={1} />}
-                    unit="horas"
-                    hint="con un sueldo de 9 € netos por hora (ejemplo)"
-                  />
-                </dl>
-              </Specimen>
             </div>
           </DesignSection>
 
@@ -475,12 +491,12 @@ export default function DesignPage() {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="mensual">
-                  <p className="text-sm text-fg-muted">
+                  <p className="text-base text-fg-muted">
                     Ahorras <Money value={25} decimals={false} className="text-fg" /> al mes.
                   </p>
                 </TabsContent>
                 <TabsContent value="anual">
-                  <p className="text-sm text-fg-muted">
+                  <p className="text-base text-fg-muted">
                     Ahorras <Money value={300} decimals={false} className="text-fg" /> al año.
                   </p>
                 </TabsContent>
@@ -547,7 +563,7 @@ export default function DesignPage() {
               ].map(([name, use]) => (
                 <div key={name} className="flex flex-col gap-1">
                   <dt className="font-mono text-sm">{name}</dt>
-                  <dd className="text-sm text-fg-muted">{use}</dd>
+                  <dd className="text-base text-fg-muted">{use}</dd>
                 </div>
               ))}
             </dl>
@@ -566,17 +582,11 @@ export default function DesignPage() {
 
           <DesignSection
             id="graficos"
-            title="Gráficos y marca"
+            title="Gráficos, esqueletos y carga"
             description="Sin ilustraciones ni emojis: geometría y datos. El campo de puntos dibuja un crecimiento compuesto real."
           >
             <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:items-center">
               <div className="flex flex-col gap-6">
-                <Logo />
-                <div className="flex items-center gap-3">
-                  <LogoMark className="size-12" />
-                  <LogoMark className="size-8" />
-                  <LogoMark className="size-6" />
-                </div>
                 <div className="flex flex-col gap-2">
                   <Skeleton className="h-4 w-48" />
                   <Skeleton className="h-4 w-64" />

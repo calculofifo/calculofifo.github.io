@@ -22,7 +22,7 @@ export function Slider({ className, ...props }: ComponentProps<typeof SliderPrim
           key={i}
           aria-label={props["aria-label"]}
           className={cn(
-            "block size-5 cursor-grab rounded-full border-2 border-brand bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.15)]",
+            "touch-hit block size-5 cursor-grab rounded-full border-2 border-brand bg-surface shadow-[0_1px_2px_rgb(0_0_0/0.15)]",
             "transition-transform duration-(--duration-fast) hover:scale-110 active:cursor-grabbing",
             "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
             "data-disabled:cursor-not-allowed",

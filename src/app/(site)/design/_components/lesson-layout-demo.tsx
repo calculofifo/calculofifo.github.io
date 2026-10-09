@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState, type KeyboardEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Kbd } from "@/components/ui/kbd";
-import { Money } from "@/components/ui/num";
+import { KeyFigure } from "@/components/ui/key-figure";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
@@ -39,12 +39,13 @@ const steps = [
   {
     kind: "Dato clave",
     body: (
-      <div className="flex flex-col gap-2">
-        <Money value={97.09} className="text-5xl font-medium" />
-        <p className="text-lg leading-8 text-fg-muted">
-          Es lo que valdrían hoy 100 € guardados un año, con una inflación del 3 %.
-        </p>
-      </div>
+      <KeyFigure
+        value={97.09}
+        fractionDigits={2}
+        unit="€"
+        label="Poder de compra"
+        context="es lo que valdrían hoy 100 € guardados un año, con una inflación del 3 %."
+      />
     ),
   },
 ];
@@ -95,7 +96,7 @@ export function LessonLayoutDemo() {
                   >
                     <span
                       className={cn(
-                        "grid size-5 shrink-0 place-items-center rounded-full border font-mono text-[10px]",
+                        "grid size-6 shrink-0 place-items-center rounded-full border font-mono text-xs",
                         item.done
                           ? "border-brand bg-brand text-brand-fg"
                           : item.current
