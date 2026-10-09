@@ -14,7 +14,7 @@ export function ComingSoon({
   return (
     <Container>
       <PageHeader eyebrow={eyebrow} title={title} description={description} />
-      <p className="text-sm text-fg-subtle">Esta sección está en construcción.</p>
+      <p className="text-base text-fg-subtle">Esta sección está en construcción.</p>
     </Container>
   );
 }

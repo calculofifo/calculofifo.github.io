@@ -64,7 +64,7 @@ export function ContrastTable() {
     <div className="overflow-x-auto rounded-md border border-border">
       <table className="w-full min-w-[520px] text-sm">
         <caption className="sr-only">Ratios de contraste WCAG por par de tokens</caption>
-        <thead className="bg-surface-muted text-left text-xs text-fg-muted">
+        <thead className="bg-surface-muted text-left text-sm text-fg-muted">
           <tr>
             <th scope="col" className="px-3 py-2 font-medium">
               Par
@@ -83,7 +83,7 @@ export function ContrastTable() {
         <tbody className="divide-y divide-border">
           {rows.map(({ pair: [fg, bg], min, kind }) => (
             <tr key={`${fg}-${bg}`}>
-              <td className="px-3 py-2 font-mono text-xs">
+              <td className="px-3 py-2 font-mono text-sm">
                 {fg} / {bg}
               </td>
               <td className="px-3 py-2 text-fg-muted">{kind}</td>
@@ -93,7 +93,7 @@ export function ContrastTable() {
                   <td
                     key={theme}
                     className={cn(
-                      "px-3 py-2 text-right font-mono tabular text-xs",
+                      "px-3 py-2 text-right font-mono tabular text-sm",
                       ratio >= min ? "text-fg" : "text-danger",
                     )}
                   >

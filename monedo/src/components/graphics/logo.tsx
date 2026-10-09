@@ -1,22 +1,56 @@
 import { cn } from "@/lib/utils";
+import { MARK_PATH, WORDMARK_CAP_HEIGHT, WORDMARK_PATH, WORDMARK_WIDTH } from "./wordmark-path";
 
-/** Brand mark: three rising bars inside a rounded square — money that grows. */
-export function LogoMark({ className }: { className?: string }) {
+/**
+ * Brand symbol: an "M" drawn as a line chart whose right shoulder rises higher.
+ * Uses `fill-brand` so the tile adapts to light/dark; the stroke is always brand-fg.
+ * Below 20px pass `small` for a heavier stroke that survives favicon sizes.
+ */
+export function LogoMark({ className, small = false }: { className?: string; small?: boolean }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className={cn("size-6", className)}>
-      <rect width="24" height="24" rx="6" className="fill-brand" />
-      <rect x="5.5" y="13" width="3" height="5.5" rx="1" className="fill-brand-fg" opacity="0.55" />
-      <rect x="10.5" y="9.5" width="3" height="9" rx="1" className="fill-brand-fg" opacity="0.8" />
-      <rect x="15.5" y="5.5" width="3" height="13" rx="1" className="fill-brand-fg" />
+    <svg viewBox="0 0 24 24" aria-hidden className={cn("size-6 shrink-0", className)}>
+      <rect width="24" height="24" rx="6.5" className="fill-brand" />
+      <path
+        d={MARK_PATH}
+        fill="none"
+        className="stroke-brand-fg"
+        strokeWidth={small ? 2.8 : 2.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-export function Logo({ className }: { className?: string }) {
+const MARK = 96;
+const GAP = 28;
+const VIEW_WIDTH = Math.ceil(MARK + GAP + WORDMARK_WIDTH);
+
+/** Full lockup (symbol + outlined wordmark). Wordmark uses currentColor; size it by height. */
+export function Logo({ className, title = "Monedo" }: { className?: string; title?: string }) {
   return (
-    <span className={cn("inline-flex items-center gap-2", className)}>
-      <LogoMark />
-      <span className="text-[17px] font-semibold tracking-[-0.02em] text-fg">Monedo</span>
-    </span>
+    <svg
+      viewBox={`0 0 ${VIEW_WIDTH} ${MARK}`}
+      role="img"
+      aria-label={title}
+      className={cn("h-6 w-auto shrink-0 text-fg", className)}
+    >
+      <g transform="scale(4)">
+        <rect width="24" height="24" rx="6.5" className="fill-brand" />
+        <path
+          d={MARK_PATH}
+          fill="none"
+          className="stroke-brand-fg"
+          strokeWidth={2.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+      <path
+        transform={`translate(${MARK + GAP} ${MARK / 2 + WORDMARK_CAP_HEIGHT / 2})`}
+        fill="currentColor"
+        d={WORDMARK_PATH}
+      />
+    </svg>
   );
 }

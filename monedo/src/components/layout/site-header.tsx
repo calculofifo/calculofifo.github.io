@@ -15,7 +15,7 @@ export function SiteHeader() {
       <Container width="wide" className="flex h-14 items-center gap-6">
         <Link
           href="/"
-          className="-mx-1 rounded-sm px-1 focus-visible:outline-2 focus-visible:outline-focus"
+          className="-mx-1 inline-flex min-h-11 items-center rounded-sm px-1 focus-visible:outline-2 focus-visible:outline-focus"
           aria-label="Monedo, ir al inicio"
         >
           <Logo />

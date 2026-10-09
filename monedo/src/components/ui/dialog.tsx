@@ -27,7 +27,7 @@ export function DialogContent({
       >
         {children}
         <DialogPrimitive.Close
-          className="absolute top-4 right-4 grid size-8 cursor-pointer place-items-center rounded-sm text-fg-subtle transition-colors hover:bg-surface-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-focus"
+          className="absolute top-3 right-3 grid size-11 cursor-pointer place-items-center rounded-sm text-fg-subtle transition-colors hover:bg-surface-muted hover:text-fg focus-visible:outline-2 focus-visible:outline-focus md:top-4 md:right-4 md:size-8"
           aria-label="Cerrar"
         >
           <X className="size-4" />
@@ -52,7 +52,7 @@ export function DialogDescription({
 }: ComponentProps<typeof DialogPrimitive.Description>) {
   return (
     <DialogPrimitive.Description
-      className={cn("mt-2 text-sm leading-6 text-fg-muted", className)}
+      className={cn("mt-2 text-base leading-7 text-fg-muted", className)}
       {...props}
     />
   );
