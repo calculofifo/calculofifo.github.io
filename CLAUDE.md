@@ -144,7 +144,7 @@ está listo por si la CLI se puede usar en local.
 
 ## TODO(verify) — datos pendientes de verificar con fuente oficial
 
-_Sin entradas todavía. Se completará en la fase 3 (contenido del curso 2)._
+_Lista completa (20 datos, todos del curso 2) en [`docs/temario.md`](./docs/temario.md#lista-de-todoverify--datos-pendientes-de-fuente-oficial). Se copiará aquí, con el archivo de cada uno, al escribir las lecciones en la fase 3._
 
 | Archivo | Dato | Fuente a consultar |
 | ------- | ---- | ------------------ |
