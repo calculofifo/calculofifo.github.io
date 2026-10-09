@@ -10,6 +10,8 @@ const outDir = fileURLToPath(new URL("../docs/screenshots/", import.meta.url));
 const pages = [
   ["home", "/"],
   ["design", "/design"],
+  ["course", "/cursos/fundamentos-del-dinero"],
+  ["lesson", "/cursos/fundamentos-del-dinero/el-dinero-es-tiempo"],
 ];
 const viewports = [
   ["mobile", { width: 390, height: 844 }, 2],

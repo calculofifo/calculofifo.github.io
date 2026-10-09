@@ -37,7 +37,13 @@ async function smallTargets(page: Page) {
 test.describe("touch targets", () => {
   test.skip(({ isMobile }) => !isMobile, "touch targets are checked on mobile");
 
-  for (const path of ["/", "/design", "/cursos"]) {
+  for (const path of [
+    "/",
+    "/design",
+    "/cursos",
+    "/cursos/fundamentos-del-dinero",
+    "/cursos/fundamentos-del-dinero/el-dinero-es-tiempo",
+  ]) {
     test(`every control on ${path} is at least 44×44`, async ({ page }) => {
       await page.goto(path);
       expect(await smallTargets(page)).toEqual([]);

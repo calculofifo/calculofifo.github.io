@@ -67,6 +67,26 @@ Reglas de arquitectura:
 - Con `exactOptionalPropertyTypes`, las props opcionales que puedan recibir `undefined` se tipan
   como `prop?: T | undefined`.
 
+## Motor de cursos
+
+- **Contenido** (`src/content/`): `schema.ts` define cursos, lecciones y una unión discriminada de
+  bloques (`objective`, `text`, `example`, `key-figure`, `interactive`, `decision`, `key-ideas`,
+  `quiz`, `challenge`). Reglas en `superRefine`: ids únicos, objetivo primero, un único quiz de 3–5
+  preguntas con la respuesta correcta entre las opciones, exactamente 3 ideas clave y un reto.
+  `index.ts` valida todo al cargar y comprueba que el título/resumen/minutos de cada lección
+  coinciden con el temario del curso.
+- **Añadir una lección**: crea `src/content/courses/<curso>/<leccion>.ts` (`satisfies LessonInput`),
+  regístrala en `lessonContent` de `src/content/index.ts` y listo: se genera su página estática.
+- **Widgets interactivos**: el contenido los referencia por id (`config.widget`) con props
+  validadas por Zod; se registran en `features/lessons/components/widgets/interactive-step.tsx`.
+- **Progreso**: `lib/progress/` (tipos, funciones puras y repositorios) + store Zustand en
+  `features/progress/` inyectado con `<ProgressProvider>`. Se guarda en cada paso (paso actual,
+  pasos completados, respuestas bloqueadas tras comprobar, decisiones, días de actividad).
+  Cualquier repositorio nuevo debe pasar `describeProgressRepositoryContract`.
+- **Lector** (`features/lessons/`): un bloque por pantalla y una pregunta por pantalla; preguntas y
+  decisiones bloquean «Continuar» hasta responder; retoma donde lo dejaste; ← → en escritorio;
+  el foco va al título de cada paso nuevo; barra de acción inferior con zona segura en móvil.
+
 ## Sistema de diseño
 
 Referencia viva: `/design`. Listón: Linear, Vercel, Stripe, Brilliant.
@@ -132,7 +152,7 @@ _Sin entradas todavía. Se completará en la fase 3 (contenido del curso 2)._
 ## Fases
 
 1. ✅ Base: proyecto, tokens, componentes, `/design`, layout, navegación y modo oscuro.
-2. Motor de cursos: esquema Zod, `ProgressRepository`, lector con todos los bloques, lección 1.1.
+2. ✅ Motor de cursos: esquema Zod, `ProgressRepository`, lector con todos los bloques, lección 1.1.
 3. Contenido: resto de cursos 1 y 2, evaluaciones y certificados.
 4. Panel, catálogo, fichas de curso, perfil y herramientas.
 5. Landing, legal, SEO, tests e2e, Lighthouse y README de despliegue.
