@@ -1,17 +1,17 @@
 // Captures key pages in mobile/desktop × light/dark into docs/screenshots/.
-// Usage: start the app (npm run build && npx next start -p 3100), then `npm run screenshots`.
-// Env: BASE_URL (default http://localhost:3100), PLAYWRIGHT_CHROMIUM_PATH (optional).
+// Usage: npm run build && npm run preview, then `npm run screenshots`.
+// Env: BASE_URL (default http://localhost:3100/monedo), PLAYWRIGHT_CHROMIUM_PATH (optional).
 import { chromium } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
-const baseUrl = process.env.BASE_URL ?? "http://localhost:3100";
+const baseUrl = process.env.BASE_URL ?? "http://localhost:3100/monedo";
 const outDir = fileURLToPath(new URL("../docs/screenshots/", import.meta.url));
 const pages = [
   ["home", "/"],
-  ["design", "/design"],
-  ["course", "/cursos/fundamentos-del-dinero"],
-  ["lesson", "/cursos/fundamentos-del-dinero/el-dinero-es-tiempo"],
+  ["design", "/design/"],
+  ["course", "/cursos/fundamentos-del-dinero/"],
+  ["lesson", "/cursos/fundamentos-del-dinero/el-dinero-es-tiempo/"],
 ];
 const viewports = [
   ["mobile", { width: 390, height: 844 }, 2],

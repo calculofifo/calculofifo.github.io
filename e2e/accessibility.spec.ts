@@ -1,3 +1,4 @@
+import { route } from "./paths";
 import { expect, test, type Page } from "@playwright/test";
 
 const INTERACTIVE =
@@ -45,7 +46,7 @@ test.describe("touch targets", () => {
     "/cursos/fundamentos-del-dinero/el-dinero-es-tiempo",
   ]) {
     test(`every control on ${path} is at least 44×44`, async ({ page }) => {
-      await page.goto(path);
+      await page.goto(route(path));
       expect(await smallTargets(page)).toEqual([]);
     });
   }
@@ -60,7 +61,7 @@ test.describe("focus ring", () => {
   ] as const) {
     test(`uses the brand colour in ${scheme} mode`, async ({ page }) => {
       await page.emulateMedia({ colorScheme: scheme });
-      await page.goto("/design");
+      await page.goto(route("/design"));
       const button = page.locator("#botones").getByRole("button", { name: "Ver temario" }).first();
       await button.focus();
       await page.keyboard.press("Shift+Tab");

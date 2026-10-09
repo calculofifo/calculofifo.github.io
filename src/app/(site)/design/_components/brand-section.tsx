@@ -1,5 +1,6 @@
 import { Download } from "lucide-react";
 import { Logo, LogoMark } from "@/components/graphics/logo";
+import { asset } from "@/lib/base-path";
 import { cn } from "@/lib/utils";
 
 const files = [
@@ -35,7 +36,7 @@ function Panel({ theme }: { theme: "light" | "dark" }) {
       {/* Favicon at its real size inside a browser-tab mock. */}
       <div className="flex max-w-64 items-center gap-2 rounded-t-md border border-b-0 border-border bg-surface px-3 py-2">
         {/* eslint-disable-next-line @next/next/no-img-element -- static SVG preview at 16px */}
-        <img src="/icon.svg" alt="" width={16} height={16} />
+        <img src={asset("/icon.svg")} alt="" width={16} height={16} />
         <span className="truncate text-sm text-fg-muted">Monedo · Aprende a manejar tu dinero</span>
       </div>
     </div>
@@ -78,7 +79,7 @@ export function BrandSection() {
         {files.map(([href, label]) => (
           <li key={href}>
             <a
-              href={href}
+              href={asset(href)}
               download
               className={cn(
                 "inline-flex min-h-11 items-center gap-2 rounded-xs text-base text-brand-text underline-offset-4 hover:underline md:min-h-0 md:text-sm",

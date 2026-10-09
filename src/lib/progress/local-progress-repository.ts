@@ -1,3 +1,4 @@
+import { STORAGE_KEYS } from "@/lib/storage-keys";
 import { addActivityDay, lessonKey } from "./lesson-progress";
 import {
   daySchema,
@@ -10,7 +11,7 @@ import {
   type ProgressSnapshot,
 } from "./types";
 
-export const PROGRESS_STORAGE_KEY = "monedo-progress";
+export const PROGRESS_STORAGE_KEY = STORAGE_KEYS.progress;
 
 type KeyValueStorage = Pick<Storage, "getItem" | "setItem" | "removeItem">;
 

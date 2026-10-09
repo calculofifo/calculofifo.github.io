@@ -20,8 +20,10 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
   ],
   webServer: {
-    command: `npm run build && npx next start -p ${PORT}`,
-    url: `http://localhost:${PORT}`,
+    // Build the static export and serve it like GitHub Pages (base path, 404.html).
+    // E2E_SKIP_BUILD=1 reuses an existing out/ (CI builds it in a previous step).
+    command: `${process.env.E2E_SKIP_BUILD ? "" : "npm run build && "}node scripts/serve-static.mjs ${PORT}`,
+    url: `http://localhost:${PORT}/monedo/`,
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
   },

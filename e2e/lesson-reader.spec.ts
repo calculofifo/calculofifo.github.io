@@ -1,8 +1,9 @@
+import { route } from "./paths";
 import { expect, test, type Page } from "@playwright/test";
 import { getLesson } from "../src/content";
 
-const COURSE = "/cursos/fundamentos-del-dinero";
-const LESSON = `${COURSE}/el-dinero-es-tiempo`;
+const COURSE = route("/cursos/fundamentos-del-dinero");
+const LESSON = route("/cursos/fundamentos-del-dinero/el-dinero-es-tiempo");
 const lesson = getLesson("fundamentos-del-dinero", "el-dinero-es-tiempo")!;
 const questions = lesson.blocks.flatMap((b) => (b.type === "quiz" ? b.questions : []));
 
@@ -46,8 +47,13 @@ async function completeLesson(page: Page, isMobile: boolean) {
 }
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/");
-  await page.evaluate(() => localStorage.clear());
+  await page.goto(route("/"));
+  // Remove only Monedo's keys: the origin may be shared with other sites.
+  await page.evaluate(() => {
+    for (const key of Object.keys(localStorage)) {
+      if (key.startsWith("monedo:")) localStorage.removeItem(key);
+    }
+  });
 });
 
 test("start course 1, complete lesson 1.1 and see the progress", async ({ page, isMobile }) => {
@@ -101,6 +107,6 @@ test("keyboard navigation with arrows, gated on questions", async ({ page, isMob
 });
 
 test("unknown lessons are 404", async ({ page }) => {
-  const response = await page.goto(`${COURSE}/no-existe`);
+  const response = await page.goto(route("/cursos/fundamentos-del-dinero/no-existe"));
   expect(response?.status()).toBe(404);
 });

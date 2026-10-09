@@ -1,4 +1,6 @@
-export const THEME_STORAGE_KEY = "monedo-theme";
+import { STORAGE_KEYS } from "@/lib/storage-keys";
+
+export const THEME_STORAGE_KEY = STORAGE_KEYS.theme;
 
 export const themePreferences = ["system", "light", "dark"] as const;
 export type ThemePreference = (typeof themePreferences)[number];

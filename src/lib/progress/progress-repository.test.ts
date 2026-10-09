@@ -109,10 +109,10 @@ describe("LocalProgressRepository resilience", () => {
   });
 
   it("keeps other keys untouched and uses a custom key", async () => {
-    storage.data.set("monedo-theme", "dark");
+    storage.data.set("monedo:theme", "dark");
     const custom = new LocalProgressRepository(storage, "custom-key");
     await custom.saveLesson(createLessonProgress("c", "l", NOW));
-    expect(storage.data.get("monedo-theme")).toBe("dark");
+    expect(storage.data.get("monedo:theme")).toBe("dark");
     expect(storage.data.has("custom-key")).toBe(true);
     expect(storage.data.has(PROGRESS_STORAGE_KEY)).toBe(false);
   });

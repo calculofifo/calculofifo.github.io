@@ -19,8 +19,8 @@ preguntas con la respuesta correcta y reto práctico.
   dato legal está marcado `TODO(verify)` y listado al final con su fuente oficial.
 - Todas las cuentas de los ejemplos están comprobadas.
 
-Cada lección dura de 5 a 8 minutos y tiene 4 preguntas. Al final de cada curso hay una evaluación
-(ver la última sección).
+Cada lección dura de 5 a 8 minutos y tiene 4 preguntas, con 4 opciones solo cuando las 4 son
+creíbles (si no, 3). Al final de cada curso hay una evaluación (ver «Evaluaciones finales»).
 
 ---
 
@@ -65,9 +65,8 @@ año: casi 20 horas.
 **Reto práctico.** Apunta tres cosas que quieras comprar, calcula su precio en horas (o en semanas
 de paga si aún no trabajas) y vuelve a ordenar la lista. ¿Sigues queriendo las tres?
 
-> Revisión propuesta para 1.1: el resto del curso usará el formato de 4 opciones en todas las
-> preguntas. Propongo añadir una cuarta opción plausible a las preguntas 2, 3 y 4
-> (p. ej. en la 3: «130 €, contando un mes más de regalo»).
+> Decisión aplicada: 4 opciones solo si las 4 son creíbles; si no, 3. Las preguntas 2, 3 y 4 de
+> la 1.1 se quedan con 3 opciones porque no hay una cuarta respuesta creíble.
 
 ---
 
@@ -713,11 +712,15 @@ casa hace la declaración, pregúntale si usa el borrador.
 
 ---
 
-## Evaluaciones finales (estructura propuesta)
+## Evaluaciones finales (decisión aprobada)
 
-- Una por curso, al final del temario: **10 preguntas** (curso 1) y **8 preguntas** (curso 2),
-  nuevas y distintas de las de las lecciones, con el mismo estilo de situaciones reales.
-- Aprobado con un **70 %** o más. Se puede repetir, con las preguntas en otro orden.
+- **Curso 1:** 10 preguntas por intento, aprobado con **7/10**. Banco de **15** preguntas.
+- **Curso 2:** 8 preguntas por intento, aprobado con **6/8**. Banco de **12** preguntas.
+- Bancos un 50 % más grandes que el examen: en cada intento se eligen las preguntas al azar y se
+  barajan las opciones. Preguntas nuevas, distintas de las de las lecciones, con el mismo estilo de
+  situaciones reales.
+- Se puede repetir tantas veces como se quiera. Al terminar se muestra el resultado y se explica
+  **cada pregunta fallada** (qué era lo correcto y por qué).
 - Al aprobar se desbloquea el certificado (`/certificado/[curso]`) con el nombre que escriba el
   alumno, guardado solo en su navegador.
 - Las preguntas de la evaluación se escriben en la fase 3, junto con las lecciones, y te las paso

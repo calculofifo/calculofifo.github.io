@@ -3,8 +3,9 @@
 # Monedo — convenciones del proyecto
 
 Plataforma web de cursos cortos de educación financiera para jóvenes de 14 a 18 años en España.
-Esta carpeta (`monedo/`) es una app autocontenida dentro del repo `calculofifo.github.io`, que aloja
-otro producto (calculadora FIFO). **No toques nada fuera de `monedo/`.** En Vercel: Root Directory = `monedo`.
+Repositorio `calculofifo/monedo`. Se publica como sitio estático en GitHub Pages en
+`https://calculofifo.github.io/monedo/` (mismo origen que la calculadora FIFO de
+`calculofifo.github.io`: ver «Almacenamiento»).
 
 ## Idioma
 
@@ -24,12 +25,13 @@ usar una API nueva (p. ej. `params` es asíncrono, `LayoutProps`/`PageProps` son
 
 ```bash
 npm run dev          # servidor de desarrollo
-npm run build        # build de producción (todas las páginas de contenido son SSG)
+npm run build        # export estático a out/ (basePath /monedo, una carpeta por ruta)
+npm run preview      # sirve out/ como GitHub Pages en http://localhost:3100/monedo/
 npm run lint         # ESLint
 npm run typecheck    # next typegen + tsc --noEmit
 npm run format       # Prettier (con orden de clases de Tailwind)
 npm run test         # Vitest (unitarios)
-npm run test:e2e     # Playwright (construye y arranca en :3100)
+npm run test:e2e     # Playwright contra el export estático (build + preview en :3100)
 npm run check        # lint + typecheck + format:check + test  ← ejecutar al cerrar cada fase
 ```
 
@@ -63,6 +65,20 @@ Reglas de arquitectura:
   el build falla.
 - **Lógica financiera** solo en `src/lib/finance/`, funciones puras con tests de casos límite.
 - **Privacidad**: sin analítica, sin cookies de terceros, sin recursos externos (fuentes incluidas).
+- **Almacenamiento**: todas las claves de `localStorage` llevan el prefijo `monedo:` y se definen
+  solo en `src/lib/storage-keys.ts` (lo vigila un test). El origen `calculofifo.github.io` se comparte
+  con la calculadora FIFO: nunca uses `localStorage.clear()`, borra solo las claves `monedo:`.
+
+## Despliegue (GitHub Pages)
+
+- `next.config.ts`: `output: "export"`, `basePath: "/monedo"`, `trailingSlash: true`,
+  `images.unoptimized`. Todas las rutas dinámicas usan `generateStaticParams` con
+  `dynamicParams = false`; nada de cookies, headers, redirects, rewrites ni route handlers dinámicos.
+- `next/link` y los iconos de metadata añaden el basePath solos. Para `<a href>` a archivos o
+  `<img src>` usa `asset("/ruta")` de `src/lib/base-path.ts`.
+- `.github/workflows/deploy.yml`: en cada push a `main` ejecuta check, export, e2e contra el export
+  y publica `out/` en Pages. En pull requests solo verifica. Requiere Settings → Pages → Source =
+  «GitHub Actions».
   El nombre del certificado solo se guarda en local.
 - Con `exactOptionalPropertyTypes`, las props opcionales que puedan recibir `undefined` se tipan
   como `prop?: T | undefined`.
@@ -98,7 +114,7 @@ Referencia viva: `/design`. Listón: Linear, Vercel, Stripe, Brilliant.
   coinciden y que todos los pares cumplen WCAG AA (texto ≥ 4,5:1, UI ≥ 3:1).
 - **Color**: neutros zinc fríos; un solo color de marca (esmeralda profundo); **ámbar solo para
   logros y rachas**; `success`/`danger` para acierto y error.
-- **Tema**: sigue al sistema; el selector guarda `light`/`dark` en `localStorage` (`monedo-theme`)
+- **Tema**: sigue al sistema; el selector guarda `light`/`dark` en `localStorage` (`monedo:theme`)
   y un script inline lo aplica antes de pintar. Variante `dark:` disponible pero preferir tokens.
   Los tokens usan `@theme inline`, así que `data-theme` también funciona en un contenedor.
 - **Tipografía**: Geist Sans para todo; **números y euros con `<Money>`, `<Num>`, `<Percent>`
@@ -159,9 +175,19 @@ _Lista completa (20 datos, todos del curso 2) en [`docs/temario.md`](./docs/tema
 
 Al cerrar cada fase: `npm run check` + `npm run build` + e2e, commit y resumen.
 
+## Decisiones de contenido (aprobadas)
+
+- Preguntas con 4 opciones solo si las 4 son creíbles; si no, 3.
+- Evaluación final: curso 1 con 10 preguntas (aprobado 7/10) y curso 2 con 8 (aprobado 6/8).
+  Banco de preguntas un 50 % más grande (15 y 12), elegidas al azar en cada intento; se puede
+  repetir y al terminar se explica cada fallo.
+
 ## Decisiones registradas
 
-- App en `monedo/` para no interferir con la calculadora FIFO ni sus workflows de GitHub Pages.
+- Nació en la carpeta `monedo/` de `calculofifo.github.io` y se movió a este repositorio con
+  `git subtree split` (historial conservado).
+- GitHub Pages con export estático en lugar de Vercel: sin servidor y sin cuentas extra. Los e2e
+  se ejecutan contra `out/` servido por `scripts/serve-static.mjs`, que imita a Pages.
 - TypeScript 5 y ESLint 9: son las versiones que fija `create-next-app` para Next 16 (TS 7 y
   ESLint 10 aún no tienen soporte oficial del plugin de Next).
 - `@types/node` 22 para casar con Node 22 (`engines`) y con las peer deps de Vitest.
