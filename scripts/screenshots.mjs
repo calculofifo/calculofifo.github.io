@@ -1,0 +1,45 @@
+// Captures key pages in mobile/desktop × light/dark into docs/screenshots/.
+// Usage: start the app (npm run build && npx next start -p 3100), then `npm run screenshots`.
+// Env: BASE_URL (default http://localhost:3100), PLAYWRIGHT_CHROMIUM_PATH (optional).
+import { chromium } from "@playwright/test";
+import { mkdir } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+
+const baseUrl = process.env.BASE_URL ?? "http://localhost:3100";
+const outDir = fileURLToPath(new URL("../docs/screenshots/", import.meta.url));
+const pages = [
+  ["home", "/"],
+  ["design", "/design"],
+];
+const viewports = [
+  ["mobile", { width: 390, height: 844 }, 2],
+  ["desktop", { width: 1440, height: 900 }, 1],
+];
+const schemes = ["light", "dark"];
+
+await mkdir(outDir, { recursive: true });
+const executablePath = process.env.PLAYWRIGHT_CHROMIUM_PATH;
+const browser = await chromium.launch(executablePath ? { executablePath } : {});
+const errors = [];
+
+for (const [name, path] of pages) {
+  for (const [device, viewport, deviceScaleFactor] of viewports) {
+    for (const colorScheme of schemes) {
+      const page = await browser.newPage({ viewport, deviceScaleFactor, colorScheme });
+      page.on("console", (m) => m.type() === "error" && errors.push(`${path}: ${m.text()}`));
+      page.on("pageerror", (e) => errors.push(`${path}: ${e.message}`));
+      await page.goto(baseUrl + path, { waitUntil: "networkidle" });
+      await page.waitForTimeout(900); // let entrance animations settle
+      const file = `${name}-${device}-${colorScheme}.png`;
+      await page.screenshot({ path: outDir + file, fullPage: true });
+      console.log("saved", file);
+      await page.close();
+    }
+  }
+}
+
+await browser.close();
+if (errors.length) {
+  console.error("Console errors:\n" + errors.join("\n"));
+  process.exit(1);
+}
